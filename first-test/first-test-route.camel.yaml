@@ -1,0 +1,19 @@
+- route:
+    id: route-585f
+    nodePrefixId: route-692
+    from:
+      id: from-6984
+      uri: timer
+      parameters:
+        timerName: hi
+        period: "5000"
+      steps:
+        - setBody:
+            id: setBody-bc8e
+            expression:
+              simple:
+                id: simple-9de6
+                expression: bonjorno
+        - log:
+            id: log-4c58
+            message: hg${body}

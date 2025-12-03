@@ -6,3 +6,7 @@ services:
       - "8082:8080"
     networks:
       - karavan
+    enviroment:
+      - ERP_USER: alice
+      - ERP_PASSWORD: alice
+      

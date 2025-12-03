@@ -15,7 +15,7 @@
       steps:
         - removeHeaders:
             id: removeHeaders-274e
-            pattern: CamleHttp*
+            pattern: CamelHttp*
         - to:
             id: to-0dda
             uri: http
@@ -25,6 +25,7 @@
               authHost: "{{env:ERP_USER}}"
               authPassword: "{{env:ERP_PASSWORD}}"
               authMethod: Basic
+              bridgeEndpoint: true
         - unmarshal:
             id: unmarshal-8527
             json:

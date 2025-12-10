@@ -3,12 +3,12 @@
     description: ERP Products Service
     path: products
 - route:
-    id: erp-products-route
+    id: erp-products
     from:
       id: from-d4e1
       uri: direct
       parameters:
-        name: erp-products-route
+        name: erp-products
       steps:
         - removeHeaders:
             id: removeHeaders-274e

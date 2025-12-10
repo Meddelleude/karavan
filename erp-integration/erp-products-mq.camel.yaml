@@ -8,7 +8,7 @@
         host: rabbitmq
         port: 5672
         queues: erp-products-request
-        exchangeName: erp-products-request
+        exchangeName: default
       steps:
         - log:
             id: log-a25f

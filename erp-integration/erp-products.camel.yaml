@@ -2,9 +2,6 @@
     id: rest-ab0e
     description: ERP Products Service
     path: products
-    get:
-      - id: get-6a3d
-        to: direct:erp-products-route
 - route:
     id: erp-products-route
     from:

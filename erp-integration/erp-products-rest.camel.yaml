@@ -1,0 +1,7 @@
+- rest:
+    id: rest-ae1d
+    get:
+      - id: get-9fd9
+        path: products
+        to: direct:erp-products-route
+        routeId: erp-products-rest

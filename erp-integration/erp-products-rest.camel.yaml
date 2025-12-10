@@ -3,12 +3,12 @@
     get:
       - id: get-9fd9
         path: products
-        to: direct:erp-products-route
+        to: direct:erp-products-rest
         routeId: erp-products-rest
 - route:
-    id: erp-products-route
+    id: erp-products
     from:
       id: from-233c
       uri: direct
       parameters:
-        name: erp-products-route
+        name: erp-products

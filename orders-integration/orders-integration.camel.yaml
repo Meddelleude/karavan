@@ -1,0 +1,42 @@
+- route:
+    id: orders-integration
+    from:
+      id: from-d3d7
+      uri: direct
+      parameters:
+        name: orders-integration
+      steps:
+        - log:
+            id: log-c49b
+            message: "📤 Sending order to ERP: ${body}"
+        - convertBodyTo:
+            id: convertBodyTo-cdf5
+            type: String
+        - removeHeaders:
+            id: removeHeaders-bd73
+            pattern: CamelHttp*
+        - setHeader:
+            id: setHeader-cccb
+            name: Content-Type
+            expression:
+              constant:
+                id: constant-b845
+                expression: application/json
+        - to:
+            id: to-5c41
+            uri: http
+            parameters:
+              httpUri: host.docker.internal:4004/api/purchase-orders
+              httpMethod: POST
+              authMethod: Basic
+              authUsername: "{{env:ERP_USER}}"
+              authPassword: "{{env:ERP_PASSWORD}}"
+              bridgeEndpoint: false
+        - log:
+            id: log-ecbc
+            message: "✅ ERP response: ${body}"
+        - log:
+            id: log-ffa9
+            message: >-
+              ✅ Order processed successfully (response sending skipped to
+              prevent duplicates)

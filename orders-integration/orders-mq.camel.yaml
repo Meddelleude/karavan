@@ -1,7 +1,7 @@
 - route:
     id: orders-mq-consumer
     from:
-      id: from-9a0f
+      id: from-918d
       uri: kamelet:spring-rabbitmq-source
       parameters:
         host: rabbitmq
@@ -9,23 +9,23 @@
         queues: orders.request
         exchangeName: default
         autoDeclare: false
-        acknowledgeMode: NONE
+        acknowledgeMode: AUTO
       steps:
         - log:
-            id: log-0de4
+            id: log-16dc
             message: "📨 Received order request from MQ: ${body}"
         - setProperty:
-            id: setProperty-d15f
+            id: setProperty-1869
             name: savedCorrelationId
             expression:
               simple:
-                id: simple-c34f
+                id: simple-2684
                 expression: ${header.rabbitmq.CORRELATION_ID}
         - log:
-            id: log-679b
+            id: log-4e57
             message: "🔑 Saved CorrelationId: ${exchangeProperty.savedCorrelationId}"
         - to:
-            id: to-8436
+            id: to-6d57
             uri: direct
             parameters:
               name: orders-integration

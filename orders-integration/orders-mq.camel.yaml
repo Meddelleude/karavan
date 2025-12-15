@@ -1,7 +1,7 @@
 - route:
     id: orders-mq-consumer
     from:
-      id: from-a523
+      id: from-b3a0
       uri: kamelet:spring-rabbitmq-source
       parameters:
         host: rabbitmq
@@ -12,20 +12,23 @@
         acknowledgeMode: AUTO
       steps:
         - log:
-            id: log-6e6c
+            id: log-cade
             message: "📨 Received order request from MQ: ${body}"
+        - log:
+            id: log-d94f
+            message: "🔍 ALL Headers: ${headers}"
         - setProperty:
-            id: setProperty-0b42
+            id: setProperty-adbc
             name: savedCorrelationId
             expression:
               simple:
-                id: simple-7f1f
-                expression: ${header.rabbitmq.CORRELATION_ID}
+                id: simple-764d
+                expression: ${header.CamelSpringRabbitmqCorrelationId}
         - log:
-            id: log-e3a2
+            id: log-7e83
             message: "🔑 Saved CorrelationId: ${exchangeProperty.savedCorrelationId}"
         - to:
-            id: to-6001
+            id: to-4e5f
             uri: direct
             parameters:
               name: orders-integration

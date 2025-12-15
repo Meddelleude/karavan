@@ -1,29 +1,29 @@
 - route:
     id: orders-integration
     from:
-      id: from-ec1e
+      id: from-6794
       uri: direct
       parameters:
         name: orders-integration
       steps:
         - log:
-            id: log-d60f
+            id: log-3298
             message: "📤 Sending order to ERP: ${body}"
         - convertBodyTo:
-            id: convertBodyTo-ba25
+            id: convertBodyTo-d9fd
             type: String
         - removeHeaders:
-            id: removeHeaders-9d18
+            id: removeHeaders-0e0f
             pattern: CamelHttp*
         - setHeader:
-            id: setHeader-a887
+            id: setHeader-396e
             name: Content-Type
             expression:
               constant:
-                id: constant-7163
+                id: constant-820f
                 expression: application/json
         - to:
-            id: to-9037
+            id: to-3a8a
             uri: http
             parameters:
               httpUri: host.docker.internal:4004/api/purchase-orders
@@ -33,35 +33,35 @@
               authPassword: "{{env:ERP_PASSWORD}}"
               bridgeEndpoint: false
         - log:
-            id: log-e432
+            id: log-f3ac
             message: "✅ ERP response: ${body}"
         - setHeader:
-            id: setHeader-2506
-            name: rabbitmq.CORRELATION_ID
+            id: setHeader-e499
+            name: CamelSpringRabbitmqCorrelationId
             expression:
               simple:
-                id: simple-656c
+                id: simple-2482
                 expression: ${exchangeProperty.savedCorrelationId}
         - log:
-            id: log-6b58
+            id: log-4f7c
             message: >-
               🔙 Sending response with correlationId:
-              ${header.rabbitmq.CORRELATION_ID}
+              ${header.CamelSpringRabbitmqCorrelationId}
         - doTry:
-            id: doTry-b553
+            id: doTry-8349
             doCatch:
-              - id: doCatch-0f43
+              - id: doCatch-b994
                 exception:
                   - java.lang.Exception
                 steps:
                   - log:
-                      id: log-6efd
+                      id: log-ec0b
                       message: >-
                         ✅ Response sent (timeout/error ignored - message was
                         delivered)
             steps:
               - to:
-                  id: to-f88c
+                  id: to-ae19
                   uri: kamelet:spring-rabbitmq-sink
                   parameters:
                     host: rabbitmq
@@ -69,5 +69,5 @@
                     exchangeName: amq.direct
                     routingKey: orders.response
               - log:
-                  id: log-a6a0
+                  id: log-6aca
                   message: ✅ Response sent successfully
